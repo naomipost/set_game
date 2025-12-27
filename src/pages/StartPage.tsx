@@ -1,4 +1,4 @@
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, FormGroup, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { CustomizePlayersDialog } from "../modules/CustomizePlayersDialog";
@@ -9,9 +9,10 @@ export const StartPage = () => {
   const [numPlayers, setNumPlayers] = useState(2);
   const [open, setOpen] = useState(false);
   const [players, setPlayers] = useState(Array.from({ length: numPlayers }, (_, i) => ({ name: `Player ${i + 1}`, setsWon: 0 })));
+  const [infinityMode, setInfinityMode] = useState(false);
 
   return (
-    <Stack spacing={4} alignItems="center" justifyContent="center" sx={{ height: '100vh' }}>
+    <Stack spacing={2} alignItems="center" justifyContent="center" sx={{ height: '100vh' }}>
       <Typography variant="h1">
         Set
       </Typography>
@@ -24,8 +25,12 @@ export const StartPage = () => {
           slotProps={{ htmlInput: { min: 1, max: 7 } }}
           value={numPlayers}
           onChange={(e) => setNumPlayers(Number(e.target.value))}
+          size="small"
         />
       </Stack>
+      <FormGroup>
+        <FormControlLabel control={<Checkbox />} label="Infinity Mode" onChange={() => setInfinityMode(prev => !prev)} />
+      </FormGroup>
       <Stack direction="row" spacing={2} alignItems="center">
         <Button variant="outlined" onClick={() => setOpen(true)}>
           Customize Players
@@ -34,7 +39,7 @@ export const StartPage = () => {
           const fullDeck = initDeck();
           const displayedCards = fullDeck.slice(0, 12);
           const deckCards = fullDeck.slice(12);
-          navigate('/play', { state: { displayedCards, deckCards, players } })
+          navigate('/play', { state: { displayedCards, deckCards, players, infinityMode } })
         }}>
           Start Game
         </Button>

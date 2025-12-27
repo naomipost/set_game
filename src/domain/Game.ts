@@ -5,4 +5,5 @@ export type Game = {
   displayedCards: Card[];
   deckCards: Card[];
   players: Player[];
+  infinityMode: boolean;
 }

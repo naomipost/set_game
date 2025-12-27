@@ -6,7 +6,7 @@ import { DisplayedCards } from "../modules/DisplayedCards";
 import { GameOptions } from "../modules/GameOptions";
 import { PlayerList } from "../modules/PlayerList";
 import type { Card } from "../domain/Card";
-import { findSetInCards } from "../utils/GameUtils";
+import { findSetInCards, initDeck } from "../utils/GameUtils";
 
 export const GamePage = () => {
   const location = useLocation();
@@ -18,7 +18,7 @@ export const GamePage = () => {
 
   const [displayedCards, setDisplayedCards] = useState(state.displayedCards);
   const [deckCards, setDeckCards] = useState(state.deckCards);
-  const { players } = state;
+  const { players, infinityMode } = state;
   const [pendingSet, setPendingSet] = useState<Card[] | null>(null);
 
   const handleDealMoreCards = () => {
@@ -41,6 +41,10 @@ export const GamePage = () => {
       return;
     }
     if(deckCards.length === 0) {
+      if(infinityMode) {
+        setDeckCards(initDeck());
+        return;
+      }
       const updatedDisplayedCards = displayedCards.filter(card => {
         return !setCards.some(
           setCard => setCard.color === card.color &&
