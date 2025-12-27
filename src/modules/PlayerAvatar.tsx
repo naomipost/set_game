@@ -11,7 +11,10 @@ type Props = {
 export const PlayerAvatar = ({ player, showAddButton, onClaimSet }: Props) => {
   return (
     <Stack spacing={1} alignItems="center" mt={2}>
-      <Typography variant="h5" fontWeight={600}>{player.name}</Typography>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Typography variant="h4">{player.avatar}</Typography>
+        <Typography variant="h5" fontWeight={600}>{player.name}</Typography>
+      </Stack>
       <Stack spacing={0.5} alignItems="center">
         <Typography>Sets Won: {player.setsWon}</Typography>
         {showAddButton && (
